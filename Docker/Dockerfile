@@ -1,33 +1,22 @@
 # escape=`
 
-FROM ubuntu:latest
+# From Microsoft's official Centos-7 image
+FROM mcr.microsoft.com/powershell:centos-7
 
-# Update the list of packages
-RUN apt-get update
+# Obligatory update
+RUN yum update -y
 
-# Install pre-requisite packages.
-RUN apt-get install -y wget apt-transport-https software-properties-common gss-ntlmssp
+# Required for gssntlmssp
+RUN yum install -y epel-release
 
-# Download the Microsoft repository keys
-RUN wget -q https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb
+# Update now that we have epel-release
+RUN yum update -y
 
-# Register the Microsoft repository keys
-RUN dpkg -i packages-microsoft-prod.deb
-
-# Delete the Microsoft repository keys file
-RUN rm packages-microsoft-prod.deb
-
-# Fix TLS Error
-ENV GNUTLS_CPUID_OVERRIDE=0x1
-
-# Update the list of packages after we added packages.microsoft.com
-RUN apt-get update
-
-# Install PowerShell
-RUN apt-get install -y powershell
+# Install libraries for NTLM support
+RUN yum install -y gssntlmssp
 
 # Add Scheduler Script
 ADD ./Docker/scheduler.ps1 /ps-scheduler/scheduler.ps1
 
 # Set Shell to Powershell
-ENTRYPOINT ["pwsh","-File","/ps-scheduler/scheduler.ps1"]
+ENTRYPOINT ["/usr/bin/pwsh","-File","/ps-scheduler/scheduler.ps1"]
