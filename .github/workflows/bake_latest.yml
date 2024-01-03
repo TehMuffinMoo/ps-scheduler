@@ -32,7 +32,6 @@ jobs:
         with:
           context: .
           file: ./Docker/Dockerfile
-          platforms: linux/amd64,linux/386
           push: true
           tags: ghcr.io/tehmuffinmoo/ps-scheduler:latest
           build-args: |
