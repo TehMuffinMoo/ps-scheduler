@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  ps-scheduler:
+    image: ps-scheduler:latest
+    environment:
+      PSSCHEDULERMODULES: 'POSH-ACME'
+      PSSCHEDULERDEBUG: 'false'
+      POSHACME_HOME: '/data/posh-acme'
+    volumes:
+      - ./ps-scheduler/scripts:/scripts
+      - ./ps-scheduler/data:/data
