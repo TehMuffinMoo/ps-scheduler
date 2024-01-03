@@ -27,7 +27,7 @@ RUN apt-get update
 RUN apt-get install -y powershell
 
 # Add Scheduler Script
-ADD ./scheduler.ps1 /ps-scheduler/scheduler.ps1
+ADD ./Docker/scheduler.ps1 /ps-scheduler/scheduler.ps1
 
 # Set Shell to Powershell
 ENTRYPOINT ["pwsh","-File","/ps-scheduler/scheduler.ps1"]
