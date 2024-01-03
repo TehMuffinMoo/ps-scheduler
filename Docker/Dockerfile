@@ -6,7 +6,7 @@ FROM ubuntu:latest
 RUN apt-get update
 
 # Install pre-requisite packages.
-RUN apt-get install -y wget apt-transport-https software-properties-common
+RUN apt-get install -y wget apt-transport-https software-properties-common gss-ntlmssp
 
 # Download the Microsoft repository keys
 RUN wget -q https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb
